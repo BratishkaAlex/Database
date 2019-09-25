@@ -81,5 +81,4 @@ public class PropertyManager {
         }
         return properties.getProperty(word);
     }
-
 }

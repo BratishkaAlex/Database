@@ -15,35 +15,6 @@ public class DatabaseUtils {
     private static Connection connection = null;
     private static Statement statement = null;
 
-    private static Connection getConnectionToDatabase(Database database) {
-        if (connection == null) {
-            try {
-                Class.forName(database.getDriverName());
-                try {
-                    LOGGER.info("Connecting to the database");
-                    connection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
-                } catch (SQLException e) {
-                    LOGGER.error("Error while connecting to database");
-                }
-            } catch (ClassNotFoundException e) {
-                LOGGER.error("Error in downloading jdbc connector");
-            }
-        }
-        return connection;
-    }
-
-    private static Statement getStatement(Database database) {
-        if (statement == null) {
-            try {
-                LOGGER.info("Creating instance of statement");
-                statement = getConnectionToDatabase(database).createStatement();
-            } catch (SQLException e) {
-                LOGGER.error("Error while connecting to database");
-            }
-        }
-        return statement;
-    }
-
     public static ResultSet executeQuery(Database database, String query) {
         CachedRowSet cachedRowSet = null;
         try {
@@ -110,5 +81,34 @@ public class DatabaseUtils {
         } catch (SQLException e) {
             LOGGER.error("Error in closing connection");
         }
+    }
+
+    private static Connection getConnectionToDatabase(Database database) {
+        if (connection == null) {
+            try {
+                Class.forName(database.getDriverName());
+                try {
+                    LOGGER.info("Connecting to the database");
+                    connection = DriverManager.getConnection(database.getUrl(), database.getUser(), database.getPassword());
+                } catch (SQLException e) {
+                    LOGGER.error("Error while connecting to database");
+                }
+            } catch (ClassNotFoundException e) {
+                LOGGER.error("Error in downloading jdbc connector");
+            }
+        }
+        return connection;
+    }
+
+    private static Statement getStatement(Database database) {
+        if (statement == null) {
+            try {
+                LOGGER.info("Creating instance of statement");
+                statement = getConnectionToDatabase(database).createStatement();
+            } catch (SQLException e) {
+                LOGGER.error("Error while connecting to database");
+            }
+        }
+        return statement;
     }
 }

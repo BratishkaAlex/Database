@@ -7,5 +7,4 @@ public class LoggerUtil {
     public static void step(String message, int counter) {
         LOGGER.info(String.format("<<<<<<<<Step %d>>>>>>>>>>>>.\n%s\n", counter, message));
     }
-
 }

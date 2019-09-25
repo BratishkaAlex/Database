@@ -9,7 +9,6 @@ public class NumberReader {
         return Integer.parseInt(getLineWithNumber("Integer", line));
     }
 
-
     public static Double getDoubleNumber(String line) {
         return Double.parseDouble(getLineWithNumber("Double", line));
     }
