@@ -14,11 +14,9 @@ import static framework.utils.LoggerUtil.LOGGER;
 public class DatabaseUtils {
 
     public static void executeQueryAndOutputInCSV(Database database, String query, String pathToCSV) {
-        try {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(pathToCSV), '\t')) {
             LOGGER.info("Getting query result and output in .csv file");
-            CSVWriter writer = new CSVWriter(new FileWriter(pathToCSV), '\t');
             writer.writeAll(executeQuery(database, query), true);
-            writer.close();
         } catch (SQLException e) {
             LOGGER.error("Error while getting query from database");
         } catch (IOException e) {
